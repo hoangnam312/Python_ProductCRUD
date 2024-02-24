@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #27ae60;
+            font-size: 16px;
+        }
+
+        button {
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-create {
+            background-color: #27ae60;
+            margin: 20px;
+        }
+
+        .button-edit {
+            background-color: #90ee90;
+        }
+
+        .button-delete {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Danh sách sản phẩm</h1>
+</header>
+
+<a href="/create">
+    <button class="button-create" onclick="">Thêm sản phầm</button>
+</a>
+
+<div class="product-list">
+    {% for product in products %}
+        <div class="product-card">
+            <img class="product-image" src="https://placekitten.com/300/200" alt={{ product.name }}>
+            <div class="product-title">{{ product.name }}</div>
+            <div class="product-description">{{ product.description }}</div>
+            <div class="product-price">{{ product.price }}</div>
+            <div>
+                {#            <a href="{{ "/update/" + str(product.id) }}">#}
+                <button class="button-edit" data-product-id="{{ product.id }}">Sửa</button>
+                {#            </a>#}
+                {#            <a href="{{ "/delete/" + str(product.id) }} }}">#}
+                <button class="button-delete" data-product-id="{{ product.id }}">Xóa</button>
+                {#            </a>#}
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(".button-edit");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const id = this.getAttribute("data-product-id");
+                window.location.href = `/update/${id}`;
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButtons = document.querySelectorAll(".button-delete");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const id = this.getAttribute("data-product-id");
+                window.location.href = `/delete/${id}`;
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
